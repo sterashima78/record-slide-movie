@@ -21,13 +21,13 @@ async function main() {
 
   let idx = 1;
   for (const seg of slides) {
-    const m = seg.match(/<!--\s*talk:\s*([\s\S]*?)-->/i);
+    const m = seg.match(/<!--\s*script:\s*([\s\S]*?)-->/i);
     if (!m) {
       idx++;
       continue;
     }
     const text = m[1].trim();
-    const out = `public/audio/${String(idx).padStart(2, '0')}.wav`;
+    const out = `public/audio/slide-${idx}.wav`;
     await vv.generateAudioFile(text, out);
     console.log(`✅ Slide ${idx} 音声生成完了`);
     idx++;
