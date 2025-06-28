@@ -1,13 +1,13 @@
 import { GenericContainer, Wait } from 'testcontainers';
 import { VoicevoxClient } from '@kajidog/voicevox-client';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 
 async function main() {
   const container = await new GenericContainer(
     'voicevox/voicevox_engine:cpu-ubuntu20.04-latest'
   )
     .withExposedPorts(50021)
-    .withWaitStrategy(Wait.forHttp('/version').withStartupTimeout(60_000))
+    .withWaitStrategy(Wait.forHttp('/version', 50021).withStartupTimeout(60_000))
     .start();
 
   const baseUrl = `http://${container.getHost()}:${container.getMappedPort(50021)}`;
@@ -27,9 +27,8 @@ async function main() {
       continue;
     }
     const text = m[1].trim();
-    const wav = await vv.speak(text, { raw: true });
     const out = `public/audio/${String(idx).padStart(2, '0')}.wav`;
-    await writeFile(out, wav);
+    await vv.generateAudioFile(text, out);
     console.log(`✅ Slide ${idx} 音声生成完了`);
     idx++;
   }
