@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "voice": "tsx generate-audio.ts",
     "gen:audio": "tsx generate-audio.ts",
     "dev": "slidev --open",
-    "run": "pnpm gen:audio && pnpm dev"
+    "run": "pnpm voice && pnpm dev"
   },
   "devDependencies": {
     "@kajidog/voicevox-client": "^0.0.2",
