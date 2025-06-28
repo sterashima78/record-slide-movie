@@ -4,15 +4,15 @@ This project demonstrates automated audio generation for Slidev presentations us
 
 The main usage flow is:
 
-1. Put per-slide scripts under `audio-src/` as `01.txt`, `02.txt`, ...
-2. Add slide front-matter referencing the generated audio files and scripts, e.g.
+1. Add talk scripts to each slide using HTML comments:
    ```markdown
    ---
    audio: /audio/01.wav
-   script: ./audio-src/01.txt
    ---
+   <!-- talk: Your narration text here -->
    # My Slide
    ```
-3. Run `pnpm run` to generate audio and launch Slidev.
+2. Run `pnpm run` to generate audio and launch Slidev. The generation script
+   extracts these comments and creates WAV files under `public/audio/`.
 
 See `TODO.md` for detailed specification.

@@ -4,15 +4,15 @@ title: Slidev x VOICEVOX demo
 
 ---
 audio: /audio/01.wav
-script: ./audio-src/01.txt
 ---
 # はじめに
+<!-- talk: こんにちは、これはスライド1の説明です。 -->
 スライド1の内容です。
 
 ---
 audio: /audio/02.wav
-script: ./audio-src/02.txt
 autoNextDelay: 1000
 ---
 # 次のステップ
+<!-- talk: 続いて、スライド2の説明に移ります。 -->
 スライド2の内容です。

@@ -9,7 +9,6 @@ Markdown ベースの Slidev スライドに対し、Docker 上の VOICEVOX Engi
 ```text
 my-talk/
 ├─ slides.md            # スライド本文 + front-matter
-├─ audio-src/           # スライド別原稿 (01.txt, 02.txt …)
 ├─ public/
 │   └─ audio/           # 生成 WAV
 ├─ setup/
@@ -52,18 +51,23 @@ const container = await new GenericContainer(
 const baseUrl = `http://${container.getHost()}:${container.getMappedPort(50021)}`;
 const vv = new VoicevoxClient({ url: baseUrl, defaultSpeaker: 3 });
 
-// 2) TXT 原稿を列挙
+// 2) slides.md から script コメントを抽出
 await mkdir('public/audio', { recursive: true });
-const files = await glob('audio-src/*.txt');
+const slides = (await readFile('slides.md', 'utf8'))
+  .split(/\n---\n/g)
+  .filter((s) => !s.trim().startsWith('title:'));
 
-for (const file of files.sort()) {
-  const idx = Number(file.match(/(\d+)/)![1]);
-  const text = (await readFile(file, 'utf8')).trim();
+let idx = 1;
+for (const seg of slides) {
+  const m = seg.match(/<!--\s*talk:\s*([\s\S]*?)-->/i);
+  if (!m) { idx++; continue; }
+  const text = m[1].trim();
 
   const wav = await vv.speak(text, { raw: true });
   const out = `public/audio/${String(idx).padStart(2, '0')}.wav`;
   await writeFile(out, wav);
   console.log(`✅ Slide ${idx} 音声生成完了`);
+  idx++;
 }
 
 // 3) コンテナ終了
