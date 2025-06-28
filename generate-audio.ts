@@ -15,17 +15,11 @@ async function main() {
 
   await mkdir('public/audio', { recursive: true });
 
-  const slides = (await readFile('slides.md', 'utf8'))
-    .split(/\n---\n/g)
-    .filter((s) => !s.trim().startsWith('title:'));
+  const markdown = await readFile('slides.md', 'utf8');
+  const matches = [...markdown.matchAll(/<!--\s*script:\s*([\s\S]*?)-->/gi)];
 
   let idx = 1;
-  for (const seg of slides) {
-    const m = seg.match(/<!--\s*script:\s*([\s\S]*?)-->/i);
-    if (!m) {
-      idx++;
-      continue;
-    }
+  for (const m of matches) {
     const text = m[1].trim();
     const out = `public/audio/slide-${idx}.wav`;
     await vv.generateAudioFile(text, out);
