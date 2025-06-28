@@ -1,1 +1,1 @@
-# record-slide-movie
+See TODO.md for project instructions.
