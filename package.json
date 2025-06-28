@@ -1,0 +1,18 @@
+{
+  "name": "record-slide-movie",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gen:audio": "tsx generate-audio.ts",
+    "dev": "slidev --open",
+    "run": "pnpm gen:audio && pnpm dev"
+  },
+  "devDependencies": {
+    "@kajidog/voicevox-client": "^0.0.2",
+    "@types/node": "^20.0.0",
+    "@slidev/cli": "^51.8.2",
+    "testcontainers": "^9.11.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.5.0"
+  }
+}

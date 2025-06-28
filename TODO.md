@@ -24,7 +24,7 @@ my-talk/
 ## 2. 依存パッケージ
 
 ```bash
-pnpm add -D slidev testcontainers @kajidog/voicevox-client \
+pnpm add -D @slidev/cli testcontainers @kajidog/voicevox-client \
   typescript tsx @types/node
 ```
 
@@ -186,4 +186,9 @@ autoNextDelay: 500
 | プリロード | DevTools Network → Media に次ページ音声が prefetch される |
 | 自動遷移 | 音声終了 + delay 後にページ送り |
 | 録画 | Recording UI で音声入り `.webm` が保存 |
+
+
+## Status
+
+All tasks implemented.
 
